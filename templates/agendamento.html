@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
+    <title>Agendamento de Banho - PetSmile</title>
+    <link rel="stylesheet" href="/static/stylegeral_agendamento.css">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <img src="/static/LogoPrincipal.png" alt="Logo PetSmile">
+    </header>
+
+    <!-- Barra de navegação -->
+    <nav>
+        <a href="cliente">Home</a>
+        <a href="gatos">Gatos</a>
+        <a href="cachorro">Cachorros</a>
+        <a href="agendamento">Banho e Tosa</a>
+        <a href="#contato">Contato</a>
+        <a href="#blog">Blog</a>
+
+        {% if session.get('usuario_nome') %}
+            <a href="{{ url_for('index') }}" class="logout-link">Sair</a>
+        {% endif %}
+    </nav>
+
+    <!-- Linha abaixo do menu -->
+    <div class="line"></div>
+
+    <!-- Seção de agendamento -->
+    <section id="agendamento">
+        <div class="container_agendamento">
+            <h2>Agendamento de Banho e Tosa</h2>
+
+            <!-- Formulário de agendamento -->
+            <form action="{{ url_for('agendar_banho') }}" method="POST">
+                <label for="data">Escolha a data do agendamento:</label>
+                <input type="date" id="data" name="data" required>
+
+                <label for="hora">Escolha a hora do agendamento:</label>
+                <input type="time" id="hora" name="hora" required>
+
+                <label for="pet_nome">Nome do Pet:</label>
+                <input type="text" id="pet_nome" name="pet_nome" required>
+
+                <button type="submit">Agendar Banho</button>
+            </form>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+/* Estilos para garantir o layout que você pediu */
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    padding-bottom: 60px;
+}
+
+/* Estilo para o cabeçalho */
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+header img {
+    width: 300px; /* Ajuste o tamanho do logotipo */
+    height: 100px;
+}
+
+/* Linha abaixo do cabeçalho */
+hr {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+}
+
+/* Barra de navegação */
+nav {
+    text-align: center;
+    background-color: white;
+    padding: 10px 0;
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0 20px;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+/* Linha abaixo do menu */
+.line {
+    border-top: 3px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Estilo para o botão de logout na barra de navegação */
+.logout-link {
+    background-color: #030174;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.logout-link:hover {
+    background-color: #1b1b1b;
+}
+
+
+/* Estilo para o container do rodapé */
+.container {
+    position: fixed; /* Fixa o rodapé na tela */
+    bottom: 0; /* Coloca na parte inferior */
+    width: 100%; /* Ocupa toda a largura da tela */
+    background-color: #d3d3d3; /* Fundo cinza */
+    padding: 10px 0; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+/* Garantir que os textos fiquem centralizados */
+.tx-center {
+    text-align: center;
+    font-size: 12px;
+}
+
+/* Estilos específicos para a página de Agendamento */
+
+/* Seção de Agendamento */
+#agendamento {
+    background-color: #fff;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    
+    
+}
+
+#agendamento .container_agendamento {
+    max-width: 500px;
+    width: 100%; /* Garante que o container ocupe a largura total até o max-width */
+    
+}
+
+#agendamento h2 {
+    font-size: 28px;
+    color: #2d3a3f;
+    margin-bottom: 20px;
+}
+
+/* Formulário de Agendamento */
+form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%; /* Garante que o formulário ocupe toda a largura do container */
+}
+
+form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #2d3a3f;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #ff9b42;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    nav a {
+        margin: 10px 0;
+    }
+
+    #agendamento .container {
+        padding: 0 15px;
+    }
+
+    form {
+        width: 100%;
+    }
+}

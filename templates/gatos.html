@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
+    <title>Produtos para Gatos - PetSmile</title>
+
+    <link rel="stylesheet" href="/static/stylegeral.css">
+
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <img src="/static/LogoPrincipal.png" alt="Logo PetSmile">
+    </header>
+
+    <!-- Barra de navegação -->
+    <nav>
+        <a href="cliente">Home</a>
+        <a href="gatos">Gatos</a>
+        <a href="cachorro">Cachorros</a>
+        <a href="agendamento">Banho e Tosa</a>
+        <a href="#contato">Contato</a>
+        <a href="#blog">Blog</a>
+
+        <!-- Se o usuário estiver logado, exibe o link de logout -->
+        {% if session.get('usuario_nome') %}
+            <a href="{{ url_for('index') }}" class="logout-link">Sair</a>
+        {% endif %}
+    </nav>
+
+    <!-- Linha abaixo do menu -->
+    <div class="line"></div>
+
+    <!-- Seção de produtos para gatos -->
+    <section>
+        <h2 style="text-align: center; margin: 30px 0;">Produtos para Gatos</h2>
+
+        <!-- Container de produtos -->
+        <div class="products">
+            <!-- Cartão de Produto 1 -->
+            <div class="product-card">
+                <img src="/static/Golden.jpg" alt="Golden">
+                <h3>Ração Golden para Gatos Adultos Castrados Sabor Salmão</h3>
+                <p class="price">R$ 30,90</p>
+                <a href="{{ url_for('detalhes_produto', produto_id=1) }}" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 2 -->
+            <div class="product-card">
+                <img src="/static/Areia.jpg" alt="Areia">
+                <h3>Areia Higiênica Pipicat Classic para Gatos</h3>
+                <p class="price">R$ 45,90</p>
+                <a href="{{ url_for('detalhes_produto', produto_id=2) }}" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 3 -->
+            <div class="product-card">
+                <img src="/static/ArranhadorTV.jpg" alt="ArranhadorTV">
+                <h3>Arranhador TV Tubo de Papelão Cansei de Ser Gato</h3>
+                <p class="price">R$ 169,99</p>
+                <a href="{{ url_for('detalhes_produto', produto_id=3) }}" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 4 -->
+            <div class="product-card">
+                <img src="/static/Cama.jpg" alt="cama">
+                <h3>Cama Quadrada Lemonade para Cães e Gatos</h3>
+                <p class="price">R$ 259,99</p>
+                <a href="{{ url_for('detalhes_produto', produto_id=4) }}" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 5 -->
+            <div class="product-card">
+                <img src="/static/Roupa.jpg" alt="Roupa">
+                <h3>Fantasia Juba de Leão Cansei de Ser Gato</h3>
+                <p class="price">R$ 79,99</p>
+                <a href="{{ url_for('detalhes_produto', produto_id=5) }}" class="button">Comprar</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <title>Dashboard - PetShop Admin</title>
+</head>
+<body>
+
+    <header>
+        <img src="/static/LogoPrincipal.png" alt="Logo PetSmile">
+    </header>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/admin">Administração</a>
+        <a href="/cliente">Clientes</a>
+        <a href="/logout">Sair</a>
+    </nav>
+
+    <div class="container">
+        <h1>Dashboard - Admin</h1>
+
+        <div class="dashboard-info">
+            <section class="section">
+                <h2>Produtos</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produto in produtos %}
+                            <tr>
+                                <td>{{ produto.nome }}</td>
+                                <td>R$ {{ produto.preco }}</td>
+                                <td>{{ produto.descricao }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2>Últimas Vendas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Valor Total</th>
+                            <th>Data da Venda</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for venda in vendas %}
+                            <tr>
+                                <td>{{ venda.produto_id }}</td>
+                                <td>{{ venda.quantidade }}</td>
+                                <td>R$ {{ venda.valor_total }}</td>
+                                <td>{{ venda.data_venda }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2>Últimos Agendamentos</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pet Nome</th>
+                            <th>Data e Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for agendamento in agendamentos %}
+                            <tr>
+                                <td>{{ agendamento.pet_nome }}</td>
+                                <td>{{ agendamento.data_hora_agendamento }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+/* Estilos para garantir o layout que você pediu */
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    padding-bottom: 60px;
+}
+
+/* Estilo para o cabeçalho */
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+header img {
+    width: 300px; /* Ajuste o tamanho do logotipo */
+    height: 100px;
+}
+
+/* Linha abaixo do cabeçalho */
+hr {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+}
+
+/* Barra de navegação */
+nav {
+    text-align: center;
+    background-color: white;
+    padding: 10px 0;
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0 20px;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+/* Linha abaixo do menu */
+.line {
+    border-top: 3px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Estilo para a área de imagens ou propagandas */
+.ads {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.ads img {
+    width: 500px; /* Ajuste o tamanho das imagens de propagandas */
+    height: 400px;
+    margin: 20px;
+}
+
+/* Estilo para o botão de logout na barra de navegação */
+.logout-link {
+    background-color: #030174;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.logout-link:hover {
+    background-color: #1b1b1b;
+}
+
+/* Estilo para os produtos */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product-card h3 {
+            margin: 15px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .product-card .price {
+            font-weight: bold;
+            font-size: 18px;
+            color: #007bff;
+            margin-top: 10px;
+        }
+
+        .product-card .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .product-card .button:hover {
+            background-color: #0056b3;
+        }
+
+/* ------- */
+
+/* Estilo para os produtos */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product-card h3 {
+    margin: 15px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.product-card p {
+    font-size: 16px;
+    color: #555;
+}
+
+.product-card .price {
+    font-weight: bold;
+    font-size: 18px;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+.product-card .button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.product-card .button:hover {
+    background-color: #0056b3;
+}
+/* ------- */
+
+/* Estilo para o container do rodapé */
+.container {
+    position: fixed; /* Fixa o rodapé na tela */
+    bottom: 0; /* Coloca na parte inferior */
+    width: 100%; /* Ocupa toda a largura da tela */
+    background-color: #d3d3d3; /* Fundo cinza */
+    padding: 10px 0; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+/* Garantir que os textos fiquem centralizados */
+.tx-center {
+    text-align: center;
+    font-size: 12px;
+}

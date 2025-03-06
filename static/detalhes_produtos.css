@@ -1,0 +1,134 @@
+/* Estilos para garantir o layout que você pediu */
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    padding-bottom: 60px;
+}
+
+/* Definindo o estilo para o header e a barra de navegação */
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+header img {
+    width: 300px; /* Ajuste o tamanho do logotipo */
+    height: 100px;
+}
+
+/* Linha abaixo do cabeçalho */
+hr {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+}
+
+nav {
+    text-align: center;
+    background-color: white;
+    padding: 10px 0;
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0 20px;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+/* Linha abaixo do menu */
+.line {
+    border-top: 3px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Estilo para o botão de logout na barra de navegação */
+.logout-link {
+    background-color: #030174;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.logout-link:hover {
+    background-color: #1b1b1b;
+}
+
+/* Ajustes para o conteúdo da página de detalhes do produto */
+#detalhes-produto {
+    max-width: 1200px; /* Limita o conteúdo para um tamanho mais agradável */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#detalhes-produto h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Garantir que a imagem do produto tenha um tamanho adequado */
+.detalhe-img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px; /* Para centralizar a imagem e dar espaçamento */
+    border-radius: 8px;
+}
+
+/* Ajuste para o formulário de compra */
+#detalhes-produto form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#detalhes-produto label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+#detalhes-produto input, 
+#detalhes-produto select {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 80%;
+    max-width: 300px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#detalhes-produto button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#detalhes-produto button:hover {
+    background-color: #218838;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    #detalhes-produto {
+        padding: 15px;
+    }
+
+    #detalhes-produto h2 {
+        font-size: 1.5em;
+    }
+
+    #detalhes-produto form {
+        margin-top: 10px;
+    }
+}

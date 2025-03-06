@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    
+    <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
+    <title>PetSmile - Tudo que seu Pet precisa</title>
+
+    <link rel="stylesheet" href="/static/stylegeral.css">
+
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <img src="/static/LogoPrincipal.png" alt="Logo PetSmile">
+    </header>    
+
+    <!-- Barra de navegação -->
+    <nav>
+        <a href="cliente">Home</a>
+        <a href="gatos">Gatos</a>
+        <a href="cachorro">Cachorros</a>
+        <a href="agendamento">Banho e Tosa</a>
+        <a href="#contato">Contato</a>
+        <a href="#blog">Blog</a>
+
+        <!-- Se o usuário estiver logado, exibe o link de logout -->
+        {% if session.get('usuario_nome') %}
+            <a href="{{ url_for('index') }}" class="logout-link">Sair</a>
+        {% endif %}
+    </nav>
+
+    <!-- Linha abaixo do menu -->
+    <div class="line"></div>
+
+    <!-- Área de Imagens ou Propagandas -->
+    <div class="ads">
+        <img src="/static/Promocao1.jpg" alt="Promoção 1">
+        <img src="/static/Promocao2.jpg" alt="Promoção 2">
+        <img src="/static/Promocao3.jpg" alt="Promoção 3">
+    </div>
+
+</body>
+</html>

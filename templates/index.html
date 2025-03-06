@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
+    <title>Login - PetSmale</title>
+    
+    <link rel="stylesheet" href="/static/style.css">
+    
+</head>
+<body>
+
+    <div class="form-container">
+        <h2 class="text-center">Login</h2>
+
+        <!-- Bloco de mensagens de erro ou sucesso -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {% for category, message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Formulário de Login -->
+        <form action="/login" method="POST">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+        
+        <div class="text-center mt-3">
+            <a href="{{ url_for('cadastro') }}" class="text-white">Não tem uma conta? Cadastre-se</a>
+        </div>
+    </div>
+
+</body>
+</html>

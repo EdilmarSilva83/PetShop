@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
+    <title>Produtos para Gatos - PetSmile</title>
+
+    <link rel="stylesheet" href="/static/stylegeral.css">
+
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <img src="/static/LogoPrincipal.png" alt="Logo PetSmile">
+    </header>
+
+    <!-- Barra de navegação -->
+    <nav>
+        <a href="cliente">Home</a>
+        <a href="gatos">Gatos</a>
+        <a href="cachorros">Cachorros</a>
+        <a href="agendamento">Banho e Tosa</a>
+        <a href="#contato">Contato</a>
+        <a href="#blog">Blog</a>
+
+        <!-- Se o usuário estiver logado, exibe o link de logout -->
+        {% if session.get('usuario_nome') %}
+            <a href="{{ url_for('index') }}" class="logout-link">Sair</a>
+        {% endif %}
+    </nav>
+
+    <!-- Linha abaixo do menu -->
+    <div class="line"></div>
+
+    <!-- Seção de produtos para gatos -->
+    <section>
+        <h2 style="text-align: center; margin: 30px 0;">Produtos para Cachorros</h2>
+
+        <!-- Container de produtos -->
+        <div class="products">
+            <!-- Cartão de Produto 1 -->
+            <div class="product-card">
+                <img src="/static/RacaoCachorro.jpg" alt="Golden">
+                <h3>Ração Golden para Cães Adultos Sabor Carne e Arroz</h3>
+                <p class="price">R$ 166,89</p>
+                <a href="#" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 2 -->
+            <div class="product-card">
+                <img src="/static/BrinquedoCachorro.jpg" alt="Brinquedo">
+                <h3>Mordedor Ossinho com Som - Cores Sortidas</h3>
+                <p class="price">R$ 69,99</p>
+                <a href="#" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 3 -->
+            <div class="product-card">
+                <img src="/static/ColeiraCachorro.jpg" alt="Coleira">
+                <h3>Guia Waterproof Bordeaux para Cães</h3>
+                <p class="price">R$ 50,00</p>
+                <a href="#" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 4 -->
+            <div class="product-card">
+                <img src="/static/RemedioCachorro.jpg" alt="Remedio">
+                <h3>Antipulgas Simparic 40 mg para Cães 10,1 a 20 kg - Zoetis</h3>
+                <p class="price">R$ 133,99</p>
+                <a href="#" class="button">Comprar</a>
+            </div>
+
+            <!-- Cartão de Produto 5 -->
+            <div class="product-card">
+                <img src="/static/RoupaCachorro.jpg" alt="Roupa">
+                <h3>Bandana Griff Dog de Natal Ho Ho para Cães Vermelha</h3>
+                <p class="price">R$ 9,99</p>
+                <a href="#" class="button">Comprar</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
