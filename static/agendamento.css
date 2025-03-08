@@ -102,6 +102,28 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
+/* Seção de Alterar Agendamento */
+#alterar_agendamento {
+    background-color: #fff;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    
+    
+}
+
+#alterar_agendamento .container_agendamento {
+    max-width: 500px;
+    width: 100%; /* Garante que o container ocupe a largura total até o max-width */
+    
+}
+
+#alterar_agendamento h2 {
+    font-size: 28px;
+    color: #2d3a3f;
+    margin-bottom: 20px;
+}
+
 /* Formulário de Agendamento */
 form {
     background-color: #f9f9f9;

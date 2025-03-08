@@ -239,6 +239,62 @@ def agendar_banho():
         if conn is not None:
             conn.close()
 
+@app.route('/alterar_agendamento', methods=['GET', 'POST'])
+def alterar_agendamento():
+    # Verificar se o usuário está logado
+    if 'usuario_id' not in session:
+        flash("Você precisa estar logado para alterar um agendamento.", "error")
+        return redirect(url_for('login'))
+
+    conn = conectar_banco()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        usuario_id = session.get('usuario_id')
+
+        # Consultar o agendamento atual
+        cursor.execute("""
+            SELECT * FROM agendamentos WHERE usuario_id = %s ORDER BY data_hora_agendamento DESC LIMIT 1
+        """, (usuario_id,))
+        agendamento = cursor.fetchone()
+
+        if not agendamento:
+            flash("Você não tem nenhum agendamento para alterar.", "error")
+            return redirect(url_for('agendamento'))
+
+        if request.method == 'POST':
+            # Realizar a atualização do agendamento
+            nova_data = request.form['data']
+            nova_hora = request.form['hora']
+            pet_nome = request.form['pet_nome']
+
+            # Junta a nova data e hora
+            nova_data_hora = f"{nova_data} {nova_hora}"
+            nova_data_hora = datetime.strptime(nova_data_hora, "%Y-%m-%d %H:%M")
+
+            # Atualiza o agendamento no banco
+            cursor.execute("""
+                UPDATE agendamentos
+                SET data_hora_agendamento = %s, pet_nome = %s
+                WHERE id = %s
+            """, (nova_data_hora, pet_nome, agendamento['id']))
+            conn.commit()
+
+            flash("Agendamento alterado com sucesso!", "success")
+            return redirect(url_for('alterar_agendamento'))  # Redireciona para a mesma página de alteração
+
+        return render_template('alterar_agendamento.html', agendamento=agendamento)
+
+    except Exception as e:
+        flash(f"Erro ao alterar agendamento: {str(e)}", "error")
+        return redirect(url_for('agendamento'))
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
 # Rota para Exibir Detalhes do Produto
 @app.route('/detalhes_produto/<int:produto_id>')
 def detalhes_produto(produto_id):
@@ -339,9 +395,8 @@ if __name__ == '__main__':
 
 # Link do projeto GitHub: https://github.com/users/EdilmarSilva83/projects/2
 
-# app.run(debug=True)
 # Precisa criar um ambiente virtual no linux
-# python3 -m venv petshop
-# source petshop/bin/activate
+# python3 -m venv projetopet
+# source projetopet/bin/activate
 # pip install flask werkzeug datetime
 # python3 app.py

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
     <title>Agendamento de Banho - PetSmile</title>
-    <link rel="stylesheet" href="/static/stylegeral_agendamento.css">
+    <link rel="stylesheet" href="/static/agendamento.css">
 </head>
 <body>
 
@@ -35,7 +35,6 @@
         <div class="container_agendamento">
             <h2>Agendamento de Banho e Tosa</h2>
 
-            <!-- Formulário de agendamento -->
             <form action="{{ url_for('agendar_banho') }}" method="POST">
                 <label for="data">Escolha a data do agendamento:</label>
                 <input type="date" id="data" name="data" required>
@@ -46,8 +45,17 @@
                 <label for="pet_nome">Nome do Pet:</label>
                 <input type="text" id="pet_nome" name="pet_nome" required>
 
-                <button type="submit">Agendar Banho</button>
+                <div class="botao-container">
+                    <button type="submit">Agendar</button>
+
+                    {% if session.get('usuario_id') %}
+                        <a href="{{ url_for('alterar_agendamento') }}">
+                            <button type="button">Alterar</button>
+                        </a>
+                    {% endif %}
+                </div>
             </form>
+
         </div>
     </section>
 
