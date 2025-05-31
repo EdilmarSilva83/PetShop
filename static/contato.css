@@ -5,7 +5,6 @@ body {
     padding-bottom: 60px;
 }
 
-/* Definindo o estilo para o header e a barra de navegação */
 header {
     text-align: center;
     padding: 20px;
@@ -40,13 +39,11 @@ nav a:hover {
     color: #007bff;
 }
 
-/* Linha abaixo do menu */
 .line {
     border-top: 3px solid #ddd;
     margin: 20px 0;
 }
 
-/* Estilo para o botão de logout na barra de navegação */
 .logout-link {
     background-color: #030174;
     color: white;
@@ -59,52 +56,43 @@ nav a:hover {
     background-color: #1b1b1b;
 }
 
-/* Ajustes para o conteúdo da página de detalhes do produto */
-#detalhes-produto {
-    max-width: 1200px; /* Limita o conteúdo para um tamanho mais agradável */
+/* Ajustes para a página de contato */
+#contato {
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
-#detalhes-produto h2 {
+#contato h2 {
     text-align: center;
     font-size: 2em;
     margin-bottom: 20px;
 }
 
-/* Garantir que a imagem do produto tenha um tamanho adequado */
-.detalhe-img {
-    max-width: 50%;
-    height: auto;
-    display: block;
-    margin: 0 auto 20px; /* Para centralizar a imagem e dar espaçamento */
-    border-radius: 8px;
-}
-
-/* Ajuste para o formulário de compra */
-#detalhes-produto form {
+#contato form {
     text-align: center;
-    margin-top: 20px;
 }
 
-#detalhes-produto label {
+#contato label {
     display: block;
     margin-bottom: 8px;
     font-size: 1em;
 }
 
-#detalhes-produto input, 
-#detalhes-produto select {
+#contato textarea, 
+#contato input {
     margin-bottom: 20px;
     padding: 10px;
     width: 80%;
-    max-width: 300px;
+    max-width: 600px;
     font-size: 1em;
     border: 1px solid #ccc;
     border-radius: 4px;
+    display: block;
+    margin: 10px auto;
 }
 
-#detalhes-produto button {
+#contato button {
     background-color: #28a745;
     color: white;
     padding: 10px 20px;
@@ -114,31 +102,6 @@ nav a:hover {
     cursor: pointer;
 }
 
-#detalhes-produto button:hover {
+#contato button:hover {
     background-color: #218838;
-}
-
-/* Responsividade para telas menores */
-@media (max-width: 768px) {
-    #detalhes-produto {
-        padding: 15px;
-    }
-
-    #detalhes-produto h2 {
-        font-size: 1.5em;
-    }
-
-    #detalhes-produto form {
-        margin-top: 10px;
-    }
-}
-
-/* Retorno da confirmação da compra */
-.alerta-sucesso {
-    background-color: #28a745;
-    color: white;
-    padding: 15px;
-    margin-top: 20px;
-    border-radius: 4px;
-    text-align: center;
 }

@@ -22,12 +22,12 @@
     </header>
 
     <nav>
-        <a href="/cliente">Home</a>
-        <a href="gatos">Gatos</a>
-        <a href="cachorro">Cachorros</a>
-        <a href="agendamento">Banho e Tosa</a>
-        <a href="#contato">Contato</a>
-        <a href="#blog">Blog</a>
+    <a href="{{ url_for('cliente') }}">Home</a>
+    <a href="{{ url_for('gatos') }}">Gatos</a>
+    <a href="{{ url_for('cachorro') }}">Cachorros</a>
+    <a href="{{ url_for('agendamento') }}">Banho e Tosa</a>
+    <a href="{{ url_for('contato') }}">Contato</a>
+    <a href="{{ url_for('meus_pontos') }}">Fidelidade</a>
 
         {% if session.get('usuario_nome') %}
             <a href="{{ url_for('index') }}" class="logout-link">Sair</a>
@@ -47,6 +47,14 @@
                 <div class="detalhes-info">
                     <p>{{ produto.descricao }}</p>
                     <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+
+                    <!-- Se a compra foi realizada com sucesso, exibe a mensagem -->
+                    {% if sucesso_compra %}
+                        <div class="alerta-sucesso">
+                            <p>Compra realizada com sucesso!</p>
+                            <p>Total: R$ {{ valor_total }} | Quantidade: {{ quantidade }} | Forma de Pagamento: {{ forma_pagamento }}</p>
+                        </div>
+                    {% endif %}
 
                     <form action="{{ url_for('finalizar_compra', produto_id=produto.id) }}" method="POST">
                         <label for="quantidade">Quantidade:</label>

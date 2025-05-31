@@ -2,19 +2,16 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    
     <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
-    <title>PetSmile - Tudo que seu Pet precisa</title>
-
-    <link rel="stylesheet" href="/static/stylegeral.css">
-
+    <title>Fidelidade - PetSmile</title>
+    <link rel="stylesheet" href="/static/contato.css">
 </head>
 <body>
 
     <!-- Cabeçalho -->
     <header>
         <img src="/static/LogoPrincipal.png" alt="Logo PetSmile">
-    </header>    
+    </header>
 
     <!-- Barra de navegação -->
     <nav>
@@ -25,7 +22,6 @@
     <a href="{{ url_for('contato') }}">Contato</a>
     <a href="{{ url_for('meus_pontos') }}">Fidelidade</a>
 
-        <!-- Se o usuário estiver logado, exibe o link de logout -->
         {% if session.get('usuario_nome') %}
             <a href="{{ url_for('index') }}" class="logout-link">Sair</a>
         {% endif %}
@@ -34,12 +30,15 @@
     <!-- Linha abaixo do menu -->
     <div class="line"></div>
 
-    <!-- Área de Imagens ou Propagandas -->
-    <div class="ads">
-        <img src="/static/Promocao1.jpg" alt="Promoção 1">
-        <img src="/static/Promocao2.jpg" alt="Promoção 2">
-        <img src="/static/Promocao3.jpg" alt="Promoção 3">
+     <!-- Conteúdo principal -->
+    <div class="container">
+        <h2>Meus Pontos de Fidelidade</h2>
+        <p>Olá, {{ session['usuario_nome'] }}!</p>
+        <p>Você possui <strong>{{ pontos }}</strong> ponto(s) acumulado(s).</p>
+        <p>Continue comprando ou agendando serviços para ganhar mais pontos!</p>
     </div>
+
+    
 
 </body>
 </html>

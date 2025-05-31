@@ -1,8 +1,3 @@
-
-CREATE DATABASE IF NOT EXISTS petshop;
-
-USE petshop;
-
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -32,9 +27,9 @@ CREATE TABLE agendamentos (
 SELECT * FROM agendamentos;
 
 INSERT INTO usuarios (nome, email, senha, tipo, contato)
-VALUES ('Admin User', 'edi@petshop.com', '32768:8:1$H1cXbHeiZiEBPWjX$d172456b1591741bff9fb706e40851486cba37b7f3168a8beaf0fb6ac9a8eb2804775270aadce80b8feecdb40e3bd267db401085b0fd2f835bbe04451cf06845', 'admin', '11901239874')
+VALUES ('Admin User', 'ediadmin@petshop.com', 'scrypt:32768:8:1$NIbRDjqUMCb7vx2k$48e56ad0946fa8763bd24d8d471aee77437cdbb4a5c5a47fffa2fc75652cbec609ab772c7564724cd62220ad725ff57d9d5714366f08dc6e923f6921af5c0ebd', 'admin', '11911221122');
 
-DELETE FROM usuarios WHERE id = 7;
+DELETE FROM usuarios WHERE id = 11;
 
 CREATE TABLE produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,6 +44,8 @@ INSERT INTO produtos (nome, descricao, preco, imagem) VALUES
 ('Areia Higiênica Pipicat', 'Areia higiênica para gatos, fácil de limpar.', 45.90, '/static/Areia.jpg'),
 ('Arranhador TV Tubo', 'Arranhador tubo de papelão para gatos, confortável e resistente.', 169.99, '/static/ArranhadorTV.jpg');
 
+SELECT * FROM produtos;
+
 CREATE TABLE vendas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
@@ -61,13 +58,24 @@ CREATE TABLE vendas (
     FOREIGN KEY (produto_id) REFERENCES produtos(id)  -- Aqui você precisa ter a tabela de produtos criada
 );
 
--- Quando o cliente realizar a compra, você pode registrar uma venda, incluindo as informações necessárias como a quantidade e o valor total. 
-INSERT INTO vendas (usuario_id, produto_id, quantidade, valor_total, forma_pagamento)
-VALUES (1, 1, 2, 61.80, 'PIX');  -- O usuário de ID 1 comprou 2 unidades do produto de ID 1 (Ração Golden)
+SELECT * FROM vendas;
 
--- Para visualizar as vendas realizadas, você pode fazer uma consulta simples
-SELECT v.id, u.nome AS usuario, p.nome AS produto, v.quantidade, v.valor_total, v.forma_pagamento, v.data_venda
-FROM vendas v
-JOIN usuarios u ON v.usuario_id = u.id
-JOIN produtos p ON v.produto_id = p.id;
+CREATE TABLE mensagens_contato (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_enviado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+SELECT * FROM mensagens_contato;
+
+CREATE TABLE pontos_usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    pontos INT DEFAULT 0,
+    ultima_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+SELECT * FROM pontos_usuario;

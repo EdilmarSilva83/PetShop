@@ -46,7 +46,7 @@ def dashboard():
         cursor.execute("SELECT * FROM produtos")
         produtos = cursor.fetchall()
 
-        # Consultar vendas (últimas 5 vendas ou por data)
+        # Consultar vendas (últimas 5 vendas)
         cursor.execute("SELECT * FROM vendas ORDER BY data_venda DESC LIMIT 5")
         vendas = cursor.fetchall()
 
@@ -54,7 +54,29 @@ def dashboard():
         cursor.execute("SELECT * FROM agendamentos ORDER BY data_hora_agendamento DESC LIMIT 5")
         agendamentos = cursor.fetchall()
 
-        return render_template('dashboard.html', produtos=produtos, vendas=vendas, agendamentos=agendamentos)
+        # Consultar pontos de fidelidade de todos os clientes
+        cursor.execute("""
+            SELECT u.id AS usuario_id, u.nome, u.email, COALESCE(p.pontos, 0) AS pontos
+            FROM usuarios u
+            LEFT JOIN pontos_usuario p ON u.id = p.usuario_id
+            WHERE u.tipo = 'cliente'
+        """)
+        pontos_clientes = cursor.fetchall()
+
+        # Consultar mensagens/sugestões enviadas pelos clientes (atualizado para 'mensagens_contato')
+        cursor.execute("""
+            SELECT id, nome, email, mensagem, resposta
+            FROM mensagens_contato
+            ORDER BY data_enviado DESC
+        """)
+        contatos = cursor.fetchall()
+
+        return render_template('dashboard.html',
+                               produtos=produtos,
+                               vendas=vendas,
+                               agendamentos=agendamentos,
+                               pontos_clientes=pontos_clientes,
+                               contatos=contatos)
 
     except Exception as e:
         flash(f"Erro ao carregar os dados do dashboard: {str(e)}", "error")
@@ -361,9 +383,8 @@ def finalizar_compra(produto_id):
             validade_cartao = request.form['validade_cartao']
             cvv_cartao = request.form['cvv_cartao']
 
-            # Aqui você integraria com uma API de pagamento real (Stripe, PagSeguro, etc)
-            # Por enquanto, vamos apenas simular uma aprovação de pagamento
-            aprovado = True  # Simulação
+            # Simulando aprovação de pagamento
+            aprovado = True  # Simulação de aprovação de pagamento
 
             if not aprovado:
                 flash("Pagamento não aprovado", "error")
@@ -377,8 +398,30 @@ def finalizar_compra(produto_id):
         cursor.execute(sql, (usuario_id, produto_id, quantidade, valor_total, forma_pagamento))
         conn.commit()
 
-        flash("Compra realizada com sucesso!", "success")
-        return render_template('confirmacao_compra.html', produto=produto, quantidade=quantidade, valor_total=valor_total, forma_pagamento=forma_pagamento)
+        # ----------------------------
+        # Sistema de Pontos de Fidelidade
+        # ----------------------------
+
+        # Regra: 1 ponto para cada R$ 10,00
+        pontos_ganhos = int(valor_total // 10)
+
+        # Verificar se o usuário já tem pontos
+        cursor.execute("SELECT * FROM pontos_usuario WHERE usuario_id = %s", (usuario_id,))
+        registro = cursor.fetchone()
+
+        if registro:
+            novo_total = registro['pontos'] + pontos_ganhos
+            cursor.execute("UPDATE pontos_usuario SET pontos = %s, ultima_atualizacao = NOW() WHERE usuario_id = %s", (novo_total, usuario_id))
+        else:
+            cursor.execute("INSERT INTO pontos_usuario (usuario_id, pontos) VALUES (%s, %s)", (usuario_id, pontos_ganhos))
+
+        conn.commit()
+
+
+        # Exibir mensagem de sucesso na mesma página
+        flash(f"Compra de {produto['nome']} realizada com sucesso! Total: R$ {valor_total}", "success")
+        
+        return render_template('detalhes_produto.html', produto=produto, sucesso_compra=True, valor_total=valor_total, quantidade=quantidade, forma_pagamento=forma_pagamento)
 
     except Exception as e:
         flash(f"Erro ao processar a compra: {str(e)}", "error")
@@ -389,6 +432,176 @@ def finalizar_compra(produto_id):
             cursor.close()
         if conn:
             conn.close()
+
+# Rota para a pagina de contato
+@app.route('/contato', methods=['GET', 'POST'])
+def contato():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        mensagem = request.form['mensagem']
+        
+        conn = conectar_banco()
+        if conn is None:
+            flash("Erro ao conectar ao banco de dados", "error")
+            return render_template('contato.html', erro_enviando=True)
+
+        cursor = conn.cursor()
+        try:
+            sql = "INSERT INTO mensagens_contato (nome, email, mensagem) VALUES (%s, %s, %s)"
+            cursor.execute(sql, (nome, email, mensagem))
+            conn.commit()
+
+            flash("Mensagem enviada com sucesso!", "success")
+            return render_template('contato.html', mensagem_enviada=True)
+
+        except Exception as e:
+            flash(f"Erro ao enviar a mensagem: {str(e)}", "error")
+            return render_template('contato.html', erro_enviando=True)
+
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
+    return render_template('contato.html')
+
+@app.route('/meus_pontos')
+def meus_pontos():
+    if 'usuario_id' not in session:
+        flash("Você precisa estar logado para ver seus pontos.", "error")
+        return redirect(url_for('login'))
+
+    usuario_id = session.get('usuario_id')
+
+    conn = conectar_banco()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("SELECT pontos FROM pontos_usuario WHERE usuario_id = %s", (usuario_id,))
+        dados = cursor.fetchone()
+        pontos = dados['pontos'] if dados else 0
+
+        return render_template('meus_pontos.html', pontos=pontos)
+
+    except Exception as e:
+        flash(f"Erro ao carregar seus pontos: {str(e)}", "error")
+        return redirect(url_for('cliente'))
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+@app.route('/admin/editar_agendamento/<int:agendamento_id>', methods=['GET', 'POST'])
+def admin_editar_agendamento(agendamento_id):
+    if 'usuario_tipo' not in session or session['usuario_tipo'] != 'admin':
+        flash("Acesso restrito!", "error")
+        return redirect(url_for('login'))
+
+    conn = conectar_banco()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        cursor.execute("SELECT * FROM agendamentos WHERE id = %s", (agendamento_id,))
+        agendamento = cursor.fetchone()
+
+        if not agendamento:
+            flash("Agendamento não encontrado!", "error")
+            return redirect(url_for('dashboard'))
+
+        if request.method == 'POST':
+            nova_data = request.form['data']
+            nova_hora = request.form['hora']
+            pet_nome = request.form['pet_nome']
+            data_hora = f"{nova_data} {nova_hora}"
+            data_hora = datetime.strptime(data_hora, "%Y-%m-%d %H:%M")
+
+            cursor.execute("""
+                UPDATE agendamentos SET pet_nome = %s, data_hora_agendamento = %s
+                WHERE id = %s
+            """, (pet_nome, data_hora, agendamento_id))
+            conn.commit()
+
+            flash("Agendamento atualizado com sucesso!", "success")
+            return redirect(url_for('dashboard'))
+
+        return render_template('admin_editar_agendamento.html', agendamento=agendamento)
+
+    except Exception as e:
+        flash(f"Erro ao editar agendamento: {str(e)}", "error")
+        return redirect(url_for('dashboard'))
+
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
+
+@app.route('/responder_contato/<int:contato_id>', methods=['POST'])
+def responder_contato(contato_id):
+    if 'usuario_tipo' not in session or session['usuario_tipo'] != 'admin':
+        flash("Acesso restrito!", "error")
+        return redirect(url_for('login'))
+
+    resposta = request.form.get('resposta', '').strip()
+
+    if not resposta:
+        flash("A resposta não pode estar vazia.", "error")
+        return redirect(url_for('dashboard'))
+
+    conn = conectar_banco()
+    if conn is None:
+        flash("Erro ao conectar ao banco de dados.", "error")
+        return redirect(url_for('dashboard'))
+
+    cursor = conn.cursor()
+
+    try:
+        # Verifica se a mensagem existe na tabela correta
+        cursor.execute("SELECT id FROM mensagens_contato WHERE id = %s", (contato_id,))
+        mensagem = cursor.fetchone()
+
+        if mensagem:
+            # Garante que a tabela tenha a coluna 'resposta'
+            cursor.execute("UPDATE mensagens_contato SET resposta = %s WHERE id = %s", (resposta, contato_id))
+            conn.commit()
+            flash("Resposta enviada com sucesso!", "success")
+        else:
+            flash("Mensagem de contato não encontrada.", "error")
+    except Exception as e:
+        flash(f"Erro ao responder a mensagem de contato: {str(e)}", "error")
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('dashboard'))
+
+@app.route('/excluir_contato/<int:contato_id>', methods=['POST'])
+def excluir_contato(contato_id):
+    if 'usuario_tipo' not in session or session['usuario_tipo'] != 'admin':
+        flash("Acesso restrito!", "error")
+        return redirect(url_for('login'))
+
+    conn = conectar_banco()
+    if conn is None:
+        flash("Erro ao conectar ao banco de dados.", "error")
+        return redirect(url_for('dashboard'))
+
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("DELETE FROM mensagens_contato WHERE id = %s", (contato_id,))
+        conn.commit()
+        flash("Mensagem excluída com sucesso.", "success")
+    except Exception as e:
+        flash(f"Erro ao excluir a mensagem: {str(e)}", "error")
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('dashboard'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Agendamento</title>
+</head>
+<body>
+    <h1>Editar Agendamento</h1>
+
+    <form method="POST">
+        <label for="pet_nome">Nome do Pet:</label>
+        <input type="text" name="pet_nome" value="{{ agendamento.pet_nome }}" required><br>
+
+        <label for="data">Data:</label>
+        <input type="date" name="data" value="{{ agendamento.data_hora_agendamento.strftime('%Y-%m-%d') }}" required><br>
+
+        <label for="hora">Hora:</label>
+        <input type="time" name="hora" value="{{ agendamento.data_hora_agendamento.strftime('%H:%M') }}" required><br>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <a href="{{ url_for('dashboard') }}">Voltar para o Dashboard</a>
+</body>
+</html>
